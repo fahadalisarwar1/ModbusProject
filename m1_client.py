@@ -1,10 +1,17 @@
 from pyModbusTCP.client import ModbusClient
 from time import sleep
 
-client = ModbusClient("localhost", 5020)
+client = ModbusClient("192.168.2.205", 502)
 client.open()
+print("started")
 while True:
-    reg_address = 1
-    reg_value = client.read_holding_registers(reg_address)
-    print("Register: ", reg_address, "\t value: ", reg_value)
-    sleep(2)
+
+    voltage_reg_address = 107
+    voltage_reg_value = client.read_holding_registers(voltage_reg_address,3)
+    v = client.read_input_registers(voltage_reg_address, 1)
+    Curr_reg_address = 102
+    Curr_reg_value = client.read_holding_registers(Curr_reg_address)
+    # voltage_actual_value = 0.018 * voltage_reg_value[]
+    print("Voltage:\t", voltage_reg_value)
+    print("Voltage:\t", v)
+    sleep(3)
